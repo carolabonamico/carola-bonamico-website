@@ -2,6 +2,7 @@ import { FiArrowDown, FiMapPin } from 'react-icons/fi'
 import { SectionShell } from '../components/common/SectionShell'
 import { Reveal } from '../components/common/Reveal'
 import { SocialLinks } from '../components/common/SocialLinks'
+import { useResume } from '../components/layout/ResumeProvider'
 import { useTranslation } from '../i18n/LanguageContext'
 import { scrollToSection } from '../utils/scroll'
 
@@ -11,6 +12,7 @@ import { scrollToSection } from '../utils/scroll'
 
 export function Hero() {
   const t = useTranslation()
+  const openResume = useResume()
 
   return (
     <SectionShell id="hero" label={t.hero.name} className="hero-section">
@@ -39,6 +41,9 @@ export function Hero() {
             </button>
             <button className="btn btn--primary" onClick={() => scrollToSection('contact')}>
               {t.hero.ctaSecondary}
+            </button>
+            <button className="btn btn--primary" onClick={openResume}>
+              {t.nav.resume}
             </button>
             <SocialLinks variant="icon" />
           </div>

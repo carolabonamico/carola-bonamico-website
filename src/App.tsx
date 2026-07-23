@@ -1,6 +1,7 @@
 import { LanguageProvider, useTranslation } from './i18n/LanguageContext'
 import { useActiveSection } from './hooks/useActiveSection'
 import { BackgroundTint } from './components/layout/BackgroundTint'
+import { ResumeProvider } from './components/layout/ResumeProvider'
 import { Navbar } from './components/layout/Navbar'
 import { Hero } from './sections/Hero'
 import { Thesis } from './sections/Thesis'
@@ -44,7 +45,9 @@ function Portfolio() {
 export default function App() {
   return (
     <LanguageProvider>
-      <Portfolio />
+      <ResumeProvider>
+        <Portfolio />
+      </ResumeProvider>
     </LanguageProvider>
   )
 }

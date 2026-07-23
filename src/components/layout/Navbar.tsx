@@ -4,9 +4,10 @@ import { FiMenu, FiX } from 'react-icons/fi'
 import type { SectionId } from '../../config/site'
 import { PROFILE, WORDMARK } from '../../config/site'
 import { useSections } from '../../hooks/useSections'
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 import { useTranslation } from '../../i18n/LanguageContext'
 import { LanguageSwitcher } from './LanguageSwitcher'
-import { ResumeViewer } from './ResumeViewer'
+import { useResume } from './ResumeProvider'
 // Ignore missing type declarations for CSS modules in TypeScript
 // @ts-ignore
 import './navbar.css'
@@ -23,10 +24,10 @@ function scrollToSection(id: SectionId) {
 export function Navbar({ activeId }: { activeId: SectionId }) {
   const sections = useSections()
   const t = useTranslation()
+  const openResume = useResume()
   const reduced = useReducedMotion()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const [resumeOpen, setResumeOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -36,20 +37,20 @@ export function Navbar({ activeId }: { activeId: SectionId }) {
   }, [])
 
   // Lock body scroll while the mobile menu is open.
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [menuOpen])
+  useBodyScrollLock(menuOpen)
 
   const go = (id: SectionId) => {
     setMenuOpen(false)
     scrollToSection(id)
   }
 
+  // Open the CV viewer (and auto-download), closing the mobile menu first.
+  const showResume = () => {
+    setMenuOpen(false)
+    openResume()
+  }
+
   return (
-    <>
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="nav__inner">
         <button className="nav__brand" onClick={() => go('hero')} aria-label={PROFILE.name}>
@@ -71,7 +72,7 @@ export function Navbar({ activeId }: { activeId: SectionId }) {
 
         <div className="nav__actions">
           <LanguageSwitcher />
-          <button className="nav__resume btn btn--ghost" onClick={() => setResumeOpen(true)}>
+          <button className="nav__resume btn btn--ghost" onClick={showResume}>
             {t.nav.resume}
           </button>
           <button
@@ -100,13 +101,7 @@ export function Navbar({ activeId }: { activeId: SectionId }) {
                 {s.navLabel}
               </button>
             ))}
-            <button
-              className="nav__overlay-link"
-              onClick={() => {
-                setMenuOpen(false)
-                setResumeOpen(true)
-              }}
-            >
+            <button className="nav__overlay-link" onClick={showResume}>
               <span className="nav__overlay-index mono">↗</span>
               {t.nav.resume}
             </button>
@@ -114,8 +109,5 @@ export function Navbar({ activeId }: { activeId: SectionId }) {
         )}
       </AnimatePresence>
     </header>
-
-    <ResumeViewer open={resumeOpen} onClose={() => setResumeOpen(false)} />
-    </>
   )
 }

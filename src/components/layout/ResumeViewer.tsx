@@ -2,7 +2,12 @@ import { useEffect } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { FiDownload, FiX } from 'react-icons/fi'
 import { PROFILE } from '../../config/site'
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 import { useLanguage, useTranslation } from '../../i18n/LanguageContext'
+// Ignore missing type declarations for CSS side-effect imports in TypeScript
+// @ts-ignore
+import './resume-viewer.css'
+
 /* ============================================================================
    Full-screen résumé viewer.
    Embeds the language-matched CV PDF in an overlay so visitors can read it in
@@ -14,20 +19,19 @@ export function ResumeViewer({ open, onClose }: { open: boolean; onClose: () => 
   const { lang } = useLanguage()
   const reduced = useReducedMotion()
   const href = PROFILE.resume[lang]
+  const filename = `CV_Carola_Bonamico_${lang.toUpperCase()}.pdf`
 
-  // Close on Escape and lock body scroll while the viewer is open.
+  // Ref-counted scroll lock (shared with the mobile menu) — never gets stuck.
+  useBodyScrollLock(open)
+
+  // Close on Escape while the viewer is open.
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
     window.addEventListener('keydown', onKey)
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = prevOverflow
-    }
+    return () => window.removeEventListener('keydown', onKey)
   }, [open, onClose])
 
   return (
@@ -55,11 +59,19 @@ export function ResumeViewer({ open, onClose }: { open: boolean; onClose: () => 
             <div className="resume-viewer__bar">
               <span className="resume-viewer__title">{t.nav.resume}</span>
               <div className="resume-viewer__actions">
-                <a className="btn btn--ghost resume-viewer__download" href={href} download>
+                <a
+                  className="btn btn--ghost resume-viewer__download"
+                  href={href}
+                  download={filename}
+                >
                   <FiDownload aria-hidden />
                   <span>{t.ui.download}</span>
                 </a>
-                <button className="resume-viewer__close" onClick={onClose} aria-label={t.ui.closeViewer}>
+                <button
+                  className="resume-viewer__close"
+                  onClick={onClose}
+                  aria-label={t.ui.closeViewer}
+                >
                   <FiX />
                 </button>
               </div>
