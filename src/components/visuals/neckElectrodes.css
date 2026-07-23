@@ -172,6 +172,12 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+  .neck-svg {
+    flex: none;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
   .neck-readout {
     width: 100%;
   }
