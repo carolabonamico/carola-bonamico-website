@@ -39,7 +39,12 @@ export function NeckElectrodes() {
   const anim = t.thesis.anim
 
   return (
-    <div className="neck-viz">
+    <motion.div
+      className="neck-viz"
+      initial={reduced ? false : 'hidden'}
+      whileInView={reduced ? undefined : 'shown'}
+      viewport={{ once: true, amount: 0.3 }}
+    >
       <svg
         viewBox="70 40 340 440"
         className="neck-svg"
@@ -54,9 +59,14 @@ export function NeckElectrodes() {
           stroke="rgba(238,241,248,0.45)"
           strokeWidth="2"
           strokeLinejoin="round"
-          initial={reduced ? false : { pathLength: 0, opacity: 0 }}
-          whileInView={reduced ? undefined : { pathLength: 1, opacity: 1 }}
-          viewport={{ once: true, amount: 0.4 }}
+          variants={
+            reduced
+              ? undefined
+              : {
+                  hidden: { pathLength: 0, opacity: 0 },
+                  shown: { pathLength: 1, opacity: 1 },
+                }
+          }
           transition={{ duration: 1.8, ease: 'easeInOut' }}
         />
 
@@ -139,6 +149,6 @@ export function NeckElectrodes() {
 
         <p className="neck-caption">{anim.caption}</p>
       </div>
-    </div>
+    </motion.div>
   )
 }
