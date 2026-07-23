@@ -1,0 +1,36 @@
+/* Stylised Turin skyline — flat, unlit black silhouette anchored at the bottom. */
+
+.turin {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 62%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.turin__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Alpine ridge behind the city */
+.turin__alps {
+  fill: #120a0d;
+}
+.turin__alps-line {
+  fill: none;
+  stroke: rgba(196, 65, 90, 0.16);
+  stroke-width: 1.5;
+}
+
+/* City silhouette — near-black paper-cut, no lights */
+.turin__city rect,
+.turin__city path,
+.turin__city circle,
+.turin__cap {
+  fill: #050308;
+}

@@ -1,0 +1,57 @@
+/* App-level shared styling: social links. */
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.socials--labelled {
+  flex-wrap: wrap;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.social__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  font-size: 1.05rem;
+  transition: inherit;
+}
+.social:hover {
+  color: var(--fg);
+}
+.social:hover .social__icon {
+  border-color: var(--line-strong);
+}
+
+/* Labelled pill variant */
+.social--labelled {
+  gap: 0.6rem;
+  padding: 0.5rem 1.1rem 0.5rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--fg);
+}
+.social--labelled .social__icon {
+  width: 30px;
+  height: 30px;
+  border: none;
+  font-size: 1rem;
+}
+.social--labelled .social__label {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+.social--labelled:hover {
+  border-color: var(--line-strong);
+}

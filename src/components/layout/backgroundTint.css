@@ -1,0 +1,41 @@
+/* Fixed, full-viewport tint stack. The active section's layer (tint gradient
+   + signature pattern) fades in; everything sits behind the content. */
+
+.bg-tint {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--bg-deep);
+  pointer-events: none;
+}
+
+.bg-tint__layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 2.4s var(--ease-inout);
+  background:
+    radial-gradient(90% 70% at 18% 0%, rgba(var(--tint), 0.13), transparent 60%),
+    radial-gradient(70% 60% at 85% 100%, rgba(var(--tint), 0.06), transparent 60%);
+}
+.bg-tint__layer.is-active {
+  opacity: 1;
+}
+
+/* Soft vignette above the pattern so foreground text stays readable */
+.bg-tint__layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 100% at 50% 45%, transparent 50%, rgba(6, 7, 10, 0.8) 100%);
+}
+
+/* Pattern canvases fill their layer, kept dim behind the content */
+.bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.55;
+}
