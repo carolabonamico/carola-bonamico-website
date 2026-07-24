@@ -37,8 +37,8 @@ export const PROFILE = {
   linkedin: 'https://www.linkedin.com/in/carola-bonamico-341805357',
   /** Résumé PDFs live in /public (served from these paths), one per language. */
   resume: {
-    en: './CV_Carola_Bonamico_EN_No_Photo.pdf',
-    it: './CV_Carola_Bonamico_IT_No_Photo.pdf',
+    en: './CV_Carola_Bonamico_EN.pdf',
+    it: './CV_Carola_Bonamico_IT.pdf',
   },
 } as const
 
