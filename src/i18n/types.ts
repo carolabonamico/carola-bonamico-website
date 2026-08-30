@@ -21,6 +21,13 @@ export interface Stat {
   label: string
 }
 
+/** A downstream task with its headline numbers and a methodological note. */
+export interface ResultCard {
+  title: string
+  metrics: Stat[]
+  note: string
+}
+
 /** A work-experience entry on the About timeline. */
 export interface TimelineItem {
   period: string
@@ -83,10 +90,13 @@ export interface Translations {
     contributionTitle: string
     contributions: FeatureItem[]
     stats: Stat[]
+    resultsTitle: string
+    resultsLead: string
+    results: ResultCard[]
     tags: string[]
     repo: string
     paper: string
-    /** Labels rendered inside the animated neck / signal visual. */
+    /** Labels rendered inside the animated head / signal visual. */
     anim: {
       title: string
       channels: string
@@ -95,6 +105,11 @@ export interface Translations {
       decoding: string
       output: string
       caption: string
+      /** Recorded modalities + session count, under the readout caption. */
+      modalities: string
+      /** Short tags placed next to the two electrode bands in the SVG. */
+      emgLabel: string
+      eegLabel: string
     }
   }
 

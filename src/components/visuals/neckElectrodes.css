@@ -1,5 +1,6 @@
-/* Thesis visual — head profile + electrodes, with the decoder readout card
-   beside the figure. Neutral line-art with the single site accent; no glow. */
+/* Thesis visual — head profile + the two electrode bands (EEG headband, EMG
+   neckband), with the decoder readout card beside the figure. Neutral line-art
+   with the single site accent; no glow. */
 
 .neck-viz {
   display: flex;
@@ -49,10 +50,27 @@
 .electrode--lateral .electrode__ring {
   stroke: rgba(238, 241, 248, 0.5);
 }
+.electrode--eeg .electrode__ring {
+  stroke: rgba(238, 241, 248, 0.45);
+  stroke-width: 1.2;
+  animation-duration: 3s;
+}
+.electrode--eeg .electrode__core {
+  fill: rgba(238, 241, 248, 0.75);
+}
+
 @keyframes electrodePulse {
   0% { transform: scale(0.7); opacity: 0.8; }
   70% { transform: scale(1.7); opacity: 0; }
   100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* Which band is which */
+.neck-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  fill: var(--muted);
 }
 
 .neck-lead {
@@ -165,6 +183,14 @@
   line-height: 1.4;
   color: var(--faint);
   margin: 0;
+}
+
+/* The multimodal, multi-session claim, stated on the visual itself */
+.neck-modes {
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  margin: -0.35rem 0 0;
 }
 
 @media (max-width: 560px) {

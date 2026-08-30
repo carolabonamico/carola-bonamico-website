@@ -5,7 +5,8 @@ import './neckElectrodes.css'
 
 /* ============================================================================
    Signature thesis visual: a stylised head-and-neck profile (line-art) wearing
-   the EMG electrode band, with the decoder readout card beside it. The band is
+   both units of the acquisition setup — the EEG headband across the forehead
+   and the EMG neckband — with the decoder readout card beside it. Each band is
    a horizontal strip, symmetric about the head's vertical axis (x = 240).
    ========================================================================== */
 
@@ -28,6 +29,10 @@ const ELECTRODES: { x: number; y: number; lateral?: boolean }[] = [
   { x: 192, y: 308, lateral: true }, { x: 288, y: 308, lateral: true },
 ]
 
+// EEG electrodes on the headband: one row across the forehead, same axis of
+// symmetry as the neckband. The real band carries 16, seven read at this angle.
+const EEG_ELECTRODES = [162, 188, 214, 240, 266, 292, 318].map((x) => ({ x, y: 120 }))
+
 const CHANNELS: [number, number][] = [
   [0, 3], [1, 4], [2, 5],
   [3, 6], [4, 7], [5, 8],
@@ -49,7 +54,7 @@ export function NeckElectrodes() {
         viewBox="70 40 340 440"
         className="neck-svg"
         role="img"
-        aria-label="Stylised head and shoulders, front view, wearing an EMG electrode band, decoding silent speech into text"
+        aria-label="Stylised head and shoulders, front view, wearing an EEG headband and an EMG neckband, decoding silent speech into text"
       >
         {/* Head, neck and shoulders silhouette (front view), drawing itself in */}
         <motion.path
@@ -70,7 +75,34 @@ export function NeckElectrodes() {
           transition={{ duration: 1.8, ease: 'easeInOut' }}
         />
 
-        {/* Electrode band: horizontal strip, symmetric about x = 240 */}
+        {/* EEG headband: horizontal strip across the forehead */}
+        <rect
+          className="neck-band neck-band--eeg"
+          x="150"
+          y="104"
+          width="180"
+          height="32"
+          rx="10"
+          fill="rgba(238,241,248,0.04)"
+          stroke="rgba(238,241,248,0.26)"
+          strokeWidth="1"
+        />
+
+        {/* EEG electrodes, smaller and neutral against the accent-coloured EMG ones */}
+        <g className="neck-electrodes">
+          {EEG_ELECTRODES.map((e, i) => (
+            <g
+              key={i}
+              className="electrode electrode--eeg"
+              style={{ animationDelay: `${i * 0.24}s` }}
+            >
+              <circle className="electrode__ring" cx={e.x} cy={e.y} r="7" />
+              <circle className="electrode__core" cx={e.x} cy={e.y} r="2.6" />
+            </g>
+          ))}
+        </g>
+
+        {/* EMG neckband: horizontal strip, symmetric about x = 240 */}
         <rect
           className="neck-band"
           x="180"
@@ -111,7 +143,15 @@ export function NeckElectrodes() {
           ))}
         </g>
 
-        {/* Signal lead from the band toward the decoder readout on the right */}
+        {/* Which unit is which */}
+        <text className="neck-label" x="142" y="125" textAnchor="end">
+          {anim.eegLabel}
+        </text>
+        <text className="neck-label" x="172" y="313" textAnchor="end">
+          {anim.emgLabel}
+        </text>
+
+        {/* Signal lead from the neckband toward the decoder readout on the right */}
         <path
           className="neck-lead"
           d="M300 308 L404 308"
@@ -148,6 +188,7 @@ export function NeckElectrodes() {
         </div>
 
         <p className="neck-caption">{anim.caption}</p>
+        <p className="neck-modes mono">{anim.modalities}</p>
       </div>
     </motion.div>
   )

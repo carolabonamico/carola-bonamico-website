@@ -6,9 +6,9 @@ import { useTranslation } from '../i18n/LanguageContext'
 import { LINKS } from '../config/site'
 
 /* ============================================================================
-   Flagship world: the master's thesis. Leads with the neck-electrode visual and
-   foregrounds the deep-learning contribution (new protocol, expanded SpeechNet,
-   CTC decoding, foundation-model integration) over the hardware.
+   Flagship world: the master's thesis. Leads with the head/electrode visual,
+   then the dataset scale, what was built (protocol, expanded SpeechNet, the two
+   downstream tasks) and finally the defended results for each task.
    ========================================================================== */
 
 export function Thesis() {
@@ -81,16 +81,45 @@ export function Thesis() {
               </Reveal>
             ))}
           </div>
-          <Reveal>
-            <div className="tag-row thesis__tags">
-              {t.thesis.tags.map((tag) => (
-                <span key={tag} className="tag tag--accent">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </Reveal>
         </div>
+
+        <div className="thesis__results">
+          <Reveal>
+            <h3 className="section-subtitle">{t.thesis.resultsTitle}</h3>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="thesis__results-lead">{t.thesis.resultsLead}</p>
+          </Reveal>
+          <div className="thesis__results-grid">
+            {t.thesis.results.map((r, i) => (
+              <Reveal key={r.title} delay={0.1 + i * 0.08} className="result panel">
+                <h4 className="result__title">{r.title}</h4>
+                <div className="result__metrics">
+                  {r.metrics.map((m) => (
+                    <div key={m.label} className="result__metric">
+                      <div className="result__value">
+                        {m.value}
+                        {m.unit && <span className="unit">{m.unit}</span>}
+                      </div>
+                      <div className="result__label">{m.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <p className="result__note">{r.note}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        <Reveal>
+          <div className="tag-row thesis__tags">
+            {t.thesis.tags.map((tag) => (
+              <span key={tag} className="tag tag--accent">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </SectionShell>
   )
