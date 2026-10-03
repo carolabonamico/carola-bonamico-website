@@ -58,7 +58,10 @@ export function About() {
                 <Reveal key={item.degree} delay={i * 0.05} className="timeline__item">
                   <span className="timeline__period mono">{item.period}</span>
                   <h4 className="timeline__role">{item.degree}</h4>
-                  <span className="timeline__org">{item.school}</span>
+                  <span className="timeline__org">
+                    {item.school}
+                    {item.location && ` · ${item.location}`}
+                  </span>
                   <p className="timeline__detail">{item.detail}</p>
                 </Reveal>
               ))}

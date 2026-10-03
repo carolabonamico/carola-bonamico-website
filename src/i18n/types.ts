@@ -42,6 +42,7 @@ export interface EducationItem {
   period: string
   degree: string
   school: string
+  location?: string
   detail: string
 }
 

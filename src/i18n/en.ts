@@ -161,7 +161,7 @@ export const en: Translations = {
     experienceTitle: 'Experience',
     experience: [
       {
-        period: 'Mar 2026 - Present',
+        period: 'Mar 2026 - Aug 2026',
         role: 'Visiting Master Research Student',
         org: 'ETH Zürich',
         location: 'Zürich, CH',
@@ -191,21 +191,24 @@ export const en: Translations = {
     educationTitle: 'Education',
     education: [
       {
-        period: '2024 - Present',
+        period: 'Sep 2024 - Oct 2026',
         degree: 'MS, Computer Engineering · Software',
         school: 'Politecnico di Torino',
-        detail: '',
+        location: 'Torino, IT',
+        detail: 'Final grade: 110/110 \n Thesis: "From Biosignals to Words: Exploiting Novel Deep Learning Architectures for Speech Understanding"',
       },
-{
-        period: '2020 - 2024',
-        degree: "Bachelor's Degree, Bioengineering",
-        school: 'University of Pavia',
+      {
+        period: 'Sep 2020 - Apr 2024',
+        degree: "BS, Bioengineering",
+        school: 'Università di Pavia',
+        location: 'Pavia, IT',
         detail: 'Thesis: "Literature review on the impact of sleep quality on glycemic patterns in type 1 diabetes patients"',
       },
       {
-        period: '2015 - 2020',
+        period: 'Sep 2015 - Jun 2020',
         degree: 'Linguistic Diploma',
         school: 'Liceo Linguistico Alberti',
+        location: 'Valenza, IT',
         detail: 'English · French · German',
       },
     ],
